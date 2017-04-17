@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/criso/fbgraph#readme"
-
-    >fbgraph (v1.4.1)</a>
+    <a href="https://github.com/criso/fbgraph#readme">fbgraph (v1.4.1)</a>
 </h1>
 <h4>Facebook Graph API client</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.fbgraph">module fbgraph</a><ol>
 
@@ -481,7 +474,7 @@
     <li>description and source-code<pre class="apidocCodePre">authorize = function (params, callback) {
   var self = this;
 
-  return this.get(&#x22;/oauth/access_token&#x22;, params, function(err, res) {
+  return this.get("/oauth/access_token", params, function(err, res) {
     if (!err) self.setAccessToken(res.access_token);
 
     callback(err, res);
@@ -494,14 +487,14 @@
 res.redirect(authUrl);
 
 // after user click, auth `code` will be set
-// we&#x27;ll send that and get the access token
+// we'll send that and get the access token
 graph.<span class="apidocCodeKeywordSpan">authorize</span>({
-    &#x22;client_id&#x22;:      conf.client_id
-  , &#x22;redirect_uri&#x22;:   conf.redirect_uri
-  , &#x22;client_secret&#x22;:  conf.client_secret
-  , &#x22;code&#x22;:           req.query.code
+    "client_id":      conf.client_id
+  , "redirect_uri":   conf.redirect_uri
+  , "client_secret":  conf.client_secret
+  , "code":           req.query.code
 }, function (err, facebookRes) {
-  res.redirect(&#x27;/loggedIn&#x27;);
+  res.redirect('/loggedIn');
 });
 ...</pre></li>
     </ul>
@@ -517,15 +510,15 @@ graph.<span class="apidocCodeKeywordSpan">authorize</span>({
     <ul>
     <li>description and source-code<pre class="apidocCodePre">batch = function (reqs, additionalData, callback) {
   if (!(reqs instanceof Array)) {
-    return callback({ message: &#x27;Graph api batch requests must be an array&#x27; }, null);
+    return callback({ message: 'Graph api batch requests must be an array' }, null);
   }
 
-  if (typeof additionalData === &#x27;function&#x27;) {
+  if (typeof additionalData === 'function') {
     callback = additionalData;
     additionalData = {};
   }
 
-  return new Graph(&#x27;POST&#x27;, &#x27;&#x27;, extend({}, {
+  return new Graph('POST', '', extend({}, {
     access_token: accessToken,
     batch: JSON.stringify(reqs)
   }, additionalData), callback);
@@ -541,12 +534,12 @@ operations in a single HTTP request.
 ```js
 graph.<span class="apidocCodeKeywordSpan">batch</span>([
 {
-  method: &#x22;GET&#x22;,
-  relative_url: &#x22;me&#x22; // Get the current user&#x27;s profile information
+  method: "GET",
+  relative_url: "me" // Get the current user's profile information
 },
 {
-  method: &#x22;GET&#x22;,
-  relative_url: &#x22;me/friends?limit=50&#x22; // Get the first 50 friends of the current user
+  method: "GET",
+  relative_url: "me/friends?limit=50" // Get the first 50 friends of the current user
 ...</pre></li>
     </ul>
 
@@ -560,14 +553,14 @@ graph.<span class="apidocCodeKeywordSpan">batch</span>([
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">del = function (url, postData, callback) {
-  if (!url.match(/[?|&#x26;]method=delete/i)) {
-    url += ~url.indexOf(&#x27;?&#x27;) ? &#x27;&#x26;&#x27; : &#x27;?&#x27;;
-    url += &#x27;method=delete&#x27;;
+  if (!url.match(/[?|&amp;]method=delete/i)) {
+    url += ~url.indexOf('?') ? '&amp;' : '?';
+    url += 'method=delete';
   }
 
-  if (typeof postData === &#x27;function&#x27;) {
+  if (typeof postData === 'function') {
     callback = postData;
-    postData = url.indexOf(&#x27;access_token&#x27;) !== -1 ? {} : {access_token: accessToken};
+    postData = url.indexOf('access_token') !== -1 ? {} : {access_token: accessToken};
   }
 
   return this.post(url, postData, callback);
@@ -604,11 +597,11 @@ operations in a single HTTP request.
     <li>description and source-code<pre class="apidocCodePre">extendAccessToken = function (params, callback) {
     var self = this;
 
-    params.grant_type        = &#x27;fb_exchange_token&#x27;;
+    params.grant_type        = 'fb_exchange_token';
     params.fb_exchange_token = params.access_token ? params.access_token : this.getAccessToken();
 
-    return this.get(&#x22;/oauth/access_token&#x22;, params, function(err, res) {
-      if (!err &#x26;&#x26; !params.access_token) {
+    return this.get("/oauth/access_token", params, function(err, res) {
+      if (!err &amp;&amp; !params.access_token) {
         self.setAccessToken(res.access_token);
       }
 
@@ -625,8 +618,8 @@ If you want to [extend the expiration time](http://developers.facebook.com/docs/
 ```js
 // extending static access token
 graph.<span class="apidocCodeKeywordSpan">extendAccessToken</span>({
-    &#x22;client_id&#x22;:      conf.client_id
-  , &#x22;client_secret&#x22;:  conf.client_secret
+    "client_id":      conf.client_id
+  , "client_secret":  conf.client_secret
 }, function (err, facebookRes) {
    console.log(facebookRes);
 });
@@ -645,11 +638,11 @@ graph.<span class="apidocCodeKeywordSpan">extendAccessToken</span>({
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">fql = function (query, params, callback) {
-  if (typeof query !== &#x27;string&#x27;) query = JSON.stringify(query);
+  if (typeof query !== 'string') query = JSON.stringify(query);
 
-  var url = &#x27;/fql?q=&#x27; + encodeURIComponent(query);
+  var url = '/fql?q=' + encodeURIComponent(query);
 
-  if (typeof params === &#x27;function&#x27;) {
+  if (typeof params === 'function') {
     callback = params;
     params = null;
     return this.get(url, callback);
@@ -663,16 +656,16 @@ graph.<span class="apidocCodeKeywordSpan">extendAccessToken</span>({
 A single FQL query is done by sending a query as a string
 
 ```js
-var query = &#x22;SELECT name FROM user WHERE uid = me()&#x22;;
+var query = "SELECT name FROM user WHERE uid = me()";
 
 graph.<span class="apidocCodeKeywordSpan">fql</span>(query, function(err, res) {
-  console.log(res); // { data: [ { name: &#x27;Ricky Bobby&#x27; } ] }
+  console.log(res); // { data: [ { name: 'Ricky Bobby' } ] }
 });
 ```
 
 You can specify additional options by adding a JSON object
 ```js
-var query = &#x22;SELECT name FROM user WHERE uid = me()&#x22;;
+var query = "SELECT name FROM user WHERE uid = me()";
 ...</pre></li>
     </ul>
 
@@ -686,32 +679,32 @@ var query = &#x22;SELECT name FROM user WHERE uid = me()&#x22;;
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">get = function (url, params, callback) {
-  if (typeof params === &#x27;function&#x27;) {
+  if (typeof params === 'function') {
     callback = params;
     params   = null;
   }
 
-  if (typeof url !== &#x27;string&#x27;) {
-    return callback({ message: &#x27;Graph api url must be a string&#x27; }, null);
+  if (typeof url !== 'string') {
+    return callback({ message: 'Graph api url must be a string' }, null);
   }
 
   if (params)  {
-    url += ~url.indexOf(&#x27;?&#x27;) ? &#x27;&#x26;&#x27; : &#x27;?&#x27;;
+    url += ~url.indexOf('?') ? '&amp;' : '?';
     url += qs.stringify(params);
   }
 
-  return new Graph(&#x27;GET&#x27;, url, callback);
+  return new Graph('GET', url, callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
     timeout:  3000
   , pool:     { maxSockets:  Infinity }
-  , headers:  { connection:  &#x22;keep-alive&#x22; }
+  , headers:  { connection:  "keep-alive" }
 };
 
 graph
   .setOptions(options)
-  .<span class="apidocCodeKeywordSpan">get</span>(&#x22;zuck&#x22;, function(err, res) {
-    console.log(res); // { id: &#x27;4&#x27;, name: &#x27;Mark Zuckerberg&#x27;... }
+  .<span class="apidocCodeKeywordSpan">get</span>("zuck", function(err, res) {
+    console.log(res); // { id: '4', name: 'Mark Zuckerberg'... }
   });
 ```
 
@@ -776,7 +769,7 @@ Possible options can be found on the [request github page](https://github.com/mi
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">getOauthUrl = function (params, opts) {
-  var url = (opts &#x26;&#x26; opts.mobile) ? oauthDialogUrlMobile : oauthDialogUrl;
+  var url = (opts &amp;&amp; opts.mobile) ? oauthDialogUrlMobile : oauthDialogUrl;
   return url + qs.stringify(params);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
@@ -788,8 +781,8 @@ More details below on the __express app__ section
 ```js
 // get authorization url
 var authUrl = graph.<span class="apidocCodeKeywordSpan">getOauthUrl</span>({
-    &#x22;client_id&#x22;:     conf.client_id
-  , &#x22;redirect_uri&#x22;:  conf.redirect_uri
+    "client_id":     conf.client_id
+  , "redirect_uri":  conf.redirect_uri
 });
 
 // shows dialog
@@ -822,16 +815,16 @@ res.redirect(authUrl);
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">post = function (url, postData, callback) {
-  if (typeof url !== &#x27;string&#x27;) {
-    return callback({ message: &#x27;Graph api url must be a string&#x27; }, null);
+  if (typeof url !== 'string') {
+    return callback({ message: 'Graph api url must be a string' }, null);
   }
 
-  if (typeof postData === &#x27;function&#x27;) {
+  if (typeof postData === 'function') {
     callback = postData;
-    postData = url.indexOf(&#x27;access_token&#x27;) !== -1 ? {} : {access_token: accessToken};
+    postData = url.indexOf('access_token') !== -1 ? {} : {access_token: accessToken};
   }
 
-  return new Graph(&#x27;POST&#x27;, url, postData, callback);
+  return new Graph('POST', url, postData, callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 ```js
@@ -841,7 +834,7 @@ res.redirect(authUrl);
 ### To use a specific access token for a particular request
 ```js
     // pass it in as part of the url
-    graph.<span class="apidocCodeKeywordSpan">post</span>(userId + &#x22;/feed?access_token=007&#x22;, wallPost, function(err, res
+    graph.<span class="apidocCodeKeywordSpan">post</span>(userId + "/feed?access_token=007", wallPost, function(err, res
 ) {
         // returns the post id
         console.log(res); // { id: xxxxx}
@@ -862,15 +855,15 @@ res.redirect(authUrl);
     <ul>
     <li>description and source-code<pre class="apidocCodePre">search = function (options, callback) {
   options = options || {};
-  var url = &#x27;/search?&#x27; + qs.stringify(options);
+  var url = '/search?' + qs.stringify(options);
   return this.get(url, callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 
 ```js
 var searchOptions = {
-    q:     &#x22;brogramming&#x22;
-  , type:  &#x22;post&#x22;
+    q:     "brogramming"
+  , type:  "post"
 };
 
 graph.<span class="apidocCodeKeywordSpan">search</span>(searchOptions, function(err, res) {
@@ -910,7 +903,7 @@ graph.<span class="apidocCodeKeywordSpan">setAccessToken</span>(access_token);
 ### To use a specific access token for a particular request
 ```js
 // pass it in as part of the url
-graph.post(userId + &#x22;/feed?access_token=007&#x22;, wallPost, function(err, res) {
+graph.post(userId + "/feed?access_token=007", wallPost, function(err, res) {
     // returns the post id
 ...</pre></li>
     </ul>
@@ -974,7 +967,7 @@ If you want to [extend the expiration time](http://developers.facebook.com/docs/
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">setOptions = function (options) {
-  if (typeof options === &#x27;object&#x27;)  requestOptions = options;
+  if (typeof options === 'object')  requestOptions = options;
 
   return this;
 }</pre></li>
@@ -982,13 +975,13 @@ If you want to [extend the expiration time](http://developers.facebook.com/docs/
 var options = {
     timeout:  3000
   , pool:     { maxSockets:  Infinity }
-  , headers:  { connection:  &#x22;keep-alive&#x22; }
+  , headers:  { connection:  "keep-alive" }
 };
 
 graph
   .<span class="apidocCodeKeywordSpan">setOptions</span>(options)
-  .get(&#x22;zuck&#x22;, function(err, res) {
-    console.log(res); // { id: &#x27;4&#x27;, name: &#x27;Mark Zuckerberg&#x27;... }
+  .get("zuck", function(err, res) {
+    console.log(res); // { id: '4', name: 'Mark Zuckerberg'... }
   });
 ```
 
@@ -1010,8 +1003,8 @@ Possible options can be found on the [request github page](https://github.com/mi
   graphVersion = version;
 
   // update auth urls
-  oauthDialogUrl       = &#x22;http://www.facebook.com/v&#x22;+version+&#x22;/dialog/oauth?&#x22;; // oldest version for auth
-  oauthDialogUrlMobile = &#x22;http://m.facebook.com/v&#x22;+version+&#x22;/dialog/oauth?&#x22;;   // oldest version for auth
+  oauthDialogUrl       = "http://www.facebook.com/v"+version+"/dialog/oauth?"; // oldest version for auth
+  oauthDialogUrlMobile = "http://m.facebook.com/v"+version+"/dialog/oauth?";   // oldest version for auth
 
   return this;
 }</pre></li>
@@ -1023,7 +1016,7 @@ Possible options can be found on the [request github page](https://github.com/mi
 ## Setting the version of the Graph Api
 
 ```js
-graph.<span class="apidocCodeKeywordSpan">setVersion</span>(&#x22;2.8&#x22;);
+graph.<span class="apidocCodeKeywordSpan">setVersion</span>("2.8");
 ```
 
 See [Facebook API changelog](https://developers.facebook.com/docs/apps/changelog) for available versions.
@@ -1053,7 +1046,7 @@ See [Facebook API changelog](https://developers.facebook.com/docs/apps/changelog
     <li>description and source-code<pre class="apidocCodePre">authorize = function (params, callback) {
   var self = this;
 
-  return this.get(&#x22;/oauth/access_token&#x22;, params, function(err, res) {
+  return this.get("/oauth/access_token", params, function(err, res) {
     if (!err) self.setAccessToken(res.access_token);
 
     callback(err, res);
@@ -1066,14 +1059,14 @@ See [Facebook API changelog](https://developers.facebook.com/docs/apps/changelog
 res.redirect(authUrl);
 
 // after user click, auth `code` will be set
-// we&#x27;ll send that and get the access token
+// we'll send that and get the access token
 graph.<span class="apidocCodeKeywordSpan">authorize</span>({
-    &#x22;client_id&#x22;:      conf.client_id
-  , &#x22;redirect_uri&#x22;:   conf.redirect_uri
-  , &#x22;client_secret&#x22;:  conf.client_secret
-  , &#x22;code&#x22;:           req.query.code
+    "client_id":      conf.client_id
+  , "redirect_uri":   conf.redirect_uri
+  , "client_secret":  conf.client_secret
+  , "code":           req.query.code
 }, function (err, facebookRes) {
-  res.redirect(&#x27;/loggedIn&#x27;);
+  res.redirect('/loggedIn');
 });
 ...</pre></li>
     </ul>
@@ -1094,15 +1087,15 @@ graph.<span class="apidocCodeKeywordSpan">authorize</span>({
     <ul>
     <li>description and source-code<pre class="apidocCodePre">batch = function (reqs, additionalData, callback) {
   if (!(reqs instanceof Array)) {
-    return callback({ message: &#x27;Graph api batch requests must be an array&#x27; }, null);
+    return callback({ message: 'Graph api batch requests must be an array' }, null);
   }
 
-  if (typeof additionalData === &#x27;function&#x27;) {
+  if (typeof additionalData === 'function') {
     callback = additionalData;
     additionalData = {};
   }
 
-  return new Graph(&#x27;POST&#x27;, &#x27;&#x27;, extend({}, {
+  return new Graph('POST', '', extend({}, {
     access_token: accessToken,
     batch: JSON.stringify(reqs)
   }, additionalData), callback);
@@ -1118,12 +1111,12 @@ operations in a single HTTP request.
 ```js
 graph.<span class="apidocCodeKeywordSpan">batch</span>([
 {
-  method: &#x22;GET&#x22;,
-  relative_url: &#x22;me&#x22; // Get the current user&#x27;s profile information
+  method: "GET",
+  relative_url: "me" // Get the current user's profile information
 },
 {
-  method: &#x22;GET&#x22;,
-  relative_url: &#x22;me/friends?limit=50&#x22; // Get the first 50 friends of the current user
+  method: "GET",
+  relative_url: "me/friends?limit=50" // Get the first 50 friends of the current user
 ...</pre></li>
     </ul>
 
@@ -1142,14 +1135,14 @@ graph.<span class="apidocCodeKeywordSpan">batch</span>([
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">del = function (url, postData, callback) {
-  if (!url.match(/[?|&#x26;]method=delete/i)) {
-    url += ~url.indexOf(&#x27;?&#x27;) ? &#x27;&#x26;&#x27; : &#x27;?&#x27;;
-    url += &#x27;method=delete&#x27;;
+  if (!url.match(/[?|&amp;]method=delete/i)) {
+    url += ~url.indexOf('?') ? '&amp;' : '?';
+    url += 'method=delete';
   }
 
-  if (typeof postData === &#x27;function&#x27;) {
+  if (typeof postData === 'function') {
     callback = postData;
-    postData = url.indexOf(&#x27;access_token&#x27;) !== -1 ? {} : {access_token: accessToken};
+    postData = url.indexOf('access_token') !== -1 ? {} : {access_token: accessToken};
   }
 
   return this.post(url, postData, callback);
@@ -1191,11 +1184,11 @@ operations in a single HTTP request.
     <li>description and source-code<pre class="apidocCodePre">extendAccessToken = function (params, callback) {
     var self = this;
 
-    params.grant_type        = &#x27;fb_exchange_token&#x27;;
+    params.grant_type        = 'fb_exchange_token';
     params.fb_exchange_token = params.access_token ? params.access_token : this.getAccessToken();
 
-    return this.get(&#x22;/oauth/access_token&#x22;, params, function(err, res) {
-      if (!err &#x26;&#x26; !params.access_token) {
+    return this.get("/oauth/access_token", params, function(err, res) {
+      if (!err &amp;&amp; !params.access_token) {
         self.setAccessToken(res.access_token);
       }
 
@@ -1212,8 +1205,8 @@ If you want to [extend the expiration time](http://developers.facebook.com/docs/
 ```js
 // extending static access token
 graph.<span class="apidocCodeKeywordSpan">extendAccessToken</span>({
-    &#x22;client_id&#x22;:      conf.client_id
-  , &#x22;client_secret&#x22;:  conf.client_secret
+    "client_id":      conf.client_id
+  , "client_secret":  conf.client_secret
 }, function (err, facebookRes) {
    console.log(facebookRes);
 });
@@ -1237,11 +1230,11 @@ graph.<span class="apidocCodeKeywordSpan">extendAccessToken</span>({
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">fql = function (query, params, callback) {
-  if (typeof query !== &#x27;string&#x27;) query = JSON.stringify(query);
+  if (typeof query !== 'string') query = JSON.stringify(query);
 
-  var url = &#x27;/fql?q=&#x27; + encodeURIComponent(query);
+  var url = '/fql?q=' + encodeURIComponent(query);
 
-  if (typeof params === &#x27;function&#x27;) {
+  if (typeof params === 'function') {
     callback = params;
     params = null;
     return this.get(url, callback);
@@ -1255,16 +1248,16 @@ graph.<span class="apidocCodeKeywordSpan">extendAccessToken</span>({
 A single FQL query is done by sending a query as a string
 
 ```js
-var query = &#x22;SELECT name FROM user WHERE uid = me()&#x22;;
+var query = "SELECT name FROM user WHERE uid = me()";
 
 graph.<span class="apidocCodeKeywordSpan">fql</span>(query, function(err, res) {
-  console.log(res); // { data: [ { name: &#x27;Ricky Bobby&#x27; } ] }
+  console.log(res); // { data: [ { name: 'Ricky Bobby' } ] }
 });
 ```
 
 You can specify additional options by adding a JSON object
 ```js
-var query = &#x22;SELECT name FROM user WHERE uid = me()&#x22;;
+var query = "SELECT name FROM user WHERE uid = me()";
 ...</pre></li>
     </ul>
 
@@ -1283,32 +1276,32 @@ var query = &#x22;SELECT name FROM user WHERE uid = me()&#x22;;
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">get = function (url, params, callback) {
-  if (typeof params === &#x27;function&#x27;) {
+  if (typeof params === 'function') {
     callback = params;
     params   = null;
   }
 
-  if (typeof url !== &#x27;string&#x27;) {
-    return callback({ message: &#x27;Graph api url must be a string&#x27; }, null);
+  if (typeof url !== 'string') {
+    return callback({ message: 'Graph api url must be a string' }, null);
   }
 
   if (params)  {
-    url += ~url.indexOf(&#x27;?&#x27;) ? &#x27;&#x26;&#x27; : &#x27;?&#x27;;
+    url += ~url.indexOf('?') ? '&amp;' : '?';
     url += qs.stringify(params);
   }
 
-  return new Graph(&#x27;GET&#x27;, url, callback);
+  return new Graph('GET', url, callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
     timeout:  3000
   , pool:     { maxSockets:  Infinity }
-  , headers:  { connection:  &#x22;keep-alive&#x22; }
+  , headers:  { connection:  "keep-alive" }
 };
 
 graph
   .setOptions(options)
-  .<span class="apidocCodeKeywordSpan">get</span>(&#x22;zuck&#x22;, function(err, res) {
-    console.log(res); // { id: &#x27;4&#x27;, name: &#x27;Mark Zuckerberg&#x27;... }
+  .<span class="apidocCodeKeywordSpan">get</span>("zuck", function(err, res) {
+    console.log(res); // { id: '4', name: 'Mark Zuckerberg'... }
   });
 ```
 
@@ -1393,7 +1386,7 @@ Possible options can be found on the [request github page](https://github.com/mi
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">getOauthUrl = function (params, opts) {
-  var url = (opts &#x26;&#x26; opts.mobile) ? oauthDialogUrlMobile : oauthDialogUrl;
+  var url = (opts &amp;&amp; opts.mobile) ? oauthDialogUrlMobile : oauthDialogUrl;
   return url + qs.stringify(params);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
@@ -1405,8 +1398,8 @@ More details below on the __express app__ section
 ```js
 // get authorization url
 var authUrl = graph.<span class="apidocCodeKeywordSpan">getOauthUrl</span>({
-    &#x22;client_id&#x22;:     conf.client_id
-  , &#x22;redirect_uri&#x22;:  conf.redirect_uri
+    "client_id":     conf.client_id
+  , "redirect_uri":  conf.redirect_uri
 });
 
 // shows dialog
@@ -1449,16 +1442,16 @@ res.redirect(authUrl);
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">post = function (url, postData, callback) {
-  if (typeof url !== &#x27;string&#x27;) {
-    return callback({ message: &#x27;Graph api url must be a string&#x27; }, null);
+  if (typeof url !== 'string') {
+    return callback({ message: 'Graph api url must be a string' }, null);
   }
 
-  if (typeof postData === &#x27;function&#x27;) {
+  if (typeof postData === 'function') {
     callback = postData;
-    postData = url.indexOf(&#x27;access_token&#x27;) !== -1 ? {} : {access_token: accessToken};
+    postData = url.indexOf('access_token') !== -1 ? {} : {access_token: accessToken};
   }
 
-  return new Graph(&#x27;POST&#x27;, url, postData, callback);
+  return new Graph('POST', url, postData, callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 ```js
@@ -1468,7 +1461,7 @@ res.redirect(authUrl);
 ### To use a specific access token for a particular request
 ```js
     // pass it in as part of the url
-    graph.<span class="apidocCodeKeywordSpan">post</span>(userId + &#x22;/feed?access_token=007&#x22;, wallPost, function(err, res
+    graph.<span class="apidocCodeKeywordSpan">post</span>(userId + "/feed?access_token=007", wallPost, function(err, res
 ) {
         // returns the post id
         console.log(res); // { id: xxxxx}
@@ -1494,15 +1487,15 @@ res.redirect(authUrl);
     <ul>
     <li>description and source-code<pre class="apidocCodePre">search = function (options, callback) {
   options = options || {};
-  var url = &#x27;/search?&#x27; + qs.stringify(options);
+  var url = '/search?' + qs.stringify(options);
   return this.get(url, callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 
 ```js
 var searchOptions = {
-    q:     &#x22;brogramming&#x22;
-  , type:  &#x22;post&#x22;
+    q:     "brogramming"
+  , type:  "post"
 };
 
 graph.<span class="apidocCodeKeywordSpan">search</span>(searchOptions, function(err, res) {
@@ -1547,7 +1540,7 @@ graph.<span class="apidocCodeKeywordSpan">setAccessToken</span>(access_token);
 ### To use a specific access token for a particular request
 ```js
 // pass it in as part of the url
-graph.post(userId + &#x22;/feed?access_token=007&#x22;, wallPost, function(err, res) {
+graph.post(userId + "/feed?access_token=007", wallPost, function(err, res) {
     // returns the post id
 ...</pre></li>
     </ul>
@@ -1626,7 +1619,7 @@ If you want to [extend the expiration time](http://developers.facebook.com/docs/
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">setOptions = function (options) {
-  if (typeof options === &#x27;object&#x27;)  requestOptions = options;
+  if (typeof options === 'object')  requestOptions = options;
 
   return this;
 }</pre></li>
@@ -1634,13 +1627,13 @@ If you want to [extend the expiration time](http://developers.facebook.com/docs/
 var options = {
     timeout:  3000
   , pool:     { maxSockets:  Infinity }
-  , headers:  { connection:  &#x22;keep-alive&#x22; }
+  , headers:  { connection:  "keep-alive" }
 };
 
 graph
   .<span class="apidocCodeKeywordSpan">setOptions</span>(options)
-  .get(&#x22;zuck&#x22;, function(err, res) {
-    console.log(res); // { id: &#x27;4&#x27;, name: &#x27;Mark Zuckerberg&#x27;... }
+  .get("zuck", function(err, res) {
+    console.log(res); // { id: '4', name: 'Mark Zuckerberg'... }
   });
 ```
 
@@ -1667,8 +1660,8 @@ Possible options can be found on the [request github page](https://github.com/mi
   graphVersion = version;
 
   // update auth urls
-  oauthDialogUrl       = &#x22;http://www.facebook.com/v&#x22;+version+&#x22;/dialog/oauth?&#x22;; // oldest version for auth
-  oauthDialogUrlMobile = &#x22;http://m.facebook.com/v&#x22;+version+&#x22;/dialog/oauth?&#x22;;   // oldest version for auth
+  oauthDialogUrl       = "http://www.facebook.com/v"+version+"/dialog/oauth?"; // oldest version for auth
+  oauthDialogUrlMobile = "http://m.facebook.com/v"+version+"/dialog/oauth?";   // oldest version for auth
 
   return this;
 }</pre></li>
@@ -1680,7 +1673,7 @@ Possible options can be found on the [request github page](https://github.com/mi
 ## Setting the version of the Graph Api
 
 ```js
-graph.<span class="apidocCodeKeywordSpan">setVersion</span>(&#x22;2.8&#x22;);
+graph.<span class="apidocCodeKeywordSpan">setVersion</span>("2.8");
 ```
 
 See [Facebook API changelog](https://developers.facebook.com/docs/apps/changelog) for available versions.
@@ -1700,3 +1693,4 @@ See [Facebook API changelog](https://developers.facebook.com/docs/apps/changelog
     ]
 </div>
 </div>
+</body></html>
