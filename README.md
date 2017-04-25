@@ -1,4 +1,7 @@
-# api documentation for  [fbgraph (v1.4.1)](https://github.com/criso/fbgraph#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-fbgraph.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-fbgraph) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-fbgraph.svg)](https://travis-ci.org/npmdoc/node-npmdoc-fbgraph)
+# npmdoc-fbgraph
+
+#### basic api documentation for  [fbgraph (v1.4.1)](https://github.com/criso/fbgraph#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-fbgraph.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-fbgraph) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-fbgraph.svg)](https://travis-ci.org/npmdoc/node-npmdoc-fbgraph)
+
 #### Facebook Graph API client
 
 [![NPM](https://nodei.co/npm/fbgraph.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/fbgraph)
@@ -61,7 +64,8 @@
         "url": "git://github.com/criso/fbgraph.git"
     },
     "scripts": {},
-    "version": "1.4.1"
+    "version": "1.4.1",
+    "bin": {}
 }
 ```
 
